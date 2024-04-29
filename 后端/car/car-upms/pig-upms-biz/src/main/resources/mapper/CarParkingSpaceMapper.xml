@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pig4cloud.pig.admin.mapper.CarParkingSpaceMapper">
+
+  <resultMap id="carParkingSpaceMap" type="com.pig4cloud.pig.admin.api.entity.CarParkingSpaceEntity">
+        <id property="spaceId" column="space_id"/>
+        <id property="lotId" column="lot_id"/>
+        <id property="spaceNumber" column="space_number"/>
+        <id property="updateTime" column="update_time"/>
+        <id property="status" column="status"/>
+  </resultMap>
+	<update id="updateStatus">
+		update car_parking_space set status = #{status}, update_time = CURRENT_TIMESTAMP where space_id = #{spaceId}
+	</update>
+	<update id="updateBatchById">
+		update car_parking_space s set s.status = 0 where #{time} > s.update_time and s.status = 1
+	</update>
+	<select id="selectCapacityBylotId" resultType="java.lang.Integer">
+		select count(*) from car_parking_space s where s.lot_id = #{lotId} and s.status = 0
+	</select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pig4cloud.pig.admin.mapper.CarOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.pig4cloud.pig.admin.api.entity.CarOrderEntity">
+            <id property="orderId" column="order_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="spaceId" column="space_id" jdbcType="BIGINT"/>
+            <result property="orderTime" column="order_time" jdbcType="TIMESTAMP"/>
+            <result property="useTime" column="use_time" jdbcType="CHAR"/>
+            <result property="plateNumber" column="plate_number" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="paymentTime" column="payment_time" jdbcType="TIMESTAMP"/>
+            <result property="fee" column="fee" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="base">
+		select o.order_id,o.user_id,o.space_id,
+		       o.order_time,o.use_time,o.status,
+		       o.payment_time,o.fee from car_order o
+    </sql>
+	<select id="selectByUserId" resultType="com.pig4cloud.pig.admin.api.dto.CarOrderDTO">
+		select o.order_id,o.user_id,o.space_id,
+			   o.order_time,o.use_time,o.status,
+			   o.payment_time,o.fee,
+			   p.space_number as spaceNumber,
+			   l.lot_name as lotName,
+			   o.plate_number as plateNumber
+		from car_order o
+			left join car_parking_space p on p.space_id = o.space_id
+			left join car_parking_lot l on l.lot_id = p.lot_id
+			where o.user_id = #{userId}
+	</select>
+</mapper>

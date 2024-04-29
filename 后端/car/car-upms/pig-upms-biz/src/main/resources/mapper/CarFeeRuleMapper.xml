@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pig4cloud.pig.admin.mapper.CarFeeRuleMapper">
+
+  <resultMap id="carFeeRuleMap" type="com.pig4cloud.pig.admin.api.entity.CarFeeRuleEntity">
+        <id property="ruleId" column="rule_id"/>
+        <id property="lotId" column="lot_id"/>
+        <id property="startTime" column="start_time"/>
+        <id property="endTime" column="end_time"/>
+        <id property="feeRate" column="fee_rate"/>
+        <id property="status" column="status"/>
+  </resultMap>
+    <select id="selectRate" resultType="com.pig4cloud.pig.admin.api.dto.CarParkingLotDTO">
+		SELECT fee_rate as feeRate,
+			   start_time as startTime,
+			   end_time as endTime
+		FROM car_fee_rule as feeRate
+		WHERE lot_id = #{lotId}
+		AND #{currentTime} BETWEEN start_time and end_time
+		AND `status` = 0;
+
+	</select>
+</mapper>

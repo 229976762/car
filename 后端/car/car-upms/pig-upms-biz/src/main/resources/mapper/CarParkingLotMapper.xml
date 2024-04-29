@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pig4cloud.pig.admin.mapper.CarParkingLotMapper">
+
+  <resultMap id="carParkingLotMap" type="com.pig4cloud.pig.admin.api.entity.CarParkingLotEntity">
+        <id property="lotId" column="lot_id"/>
+        <id property="lotName" column="lot_name"/>
+        <id property="x" column="x"/>
+        <id property="y" column="y"/>
+        <id property="capacity" column="capacity"/>
+        <id property="state" column="state"/>
+  </resultMap>
+
+	<sql id="selectCarParkingLot">
+		SELECT
+			l.lot_id AS lotId,
+			l.lot_name AS lotName,
+			l.x,
+			l.y,
+			l.capacity,
+			l.state
+		FROM
+			car_parking_lot l
+	</sql>
+
+
+	<select id="getCarParkingLotPageWx" resultType="com.pig4cloud.pig.admin.api.dto.CarParkingLotDTO">
+		SELECT
+			l.lot_id AS lotId,
+			l.lot_name AS lotName,
+			l.capacity AS capacity,
+			l.state AS state,
+			s.space_number as spaceNumber,
+			s.space_id AS spaceId
+		FROM
+			car_parking_lot l
+		left join car_parking_space s on s.lot_id = l.lot_id
+		where l.lot_id = #{lotId} and s.status = 0 limit 1;
+
+	</select>
+</mapper>

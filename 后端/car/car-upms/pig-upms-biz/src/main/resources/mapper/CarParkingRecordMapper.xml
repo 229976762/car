@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pig4cloud.pig.admin.mapper.CarParkingRecordMapper">
+
+  <resultMap id="carParkingRecordMap" type="com.pig4cloud.pig.admin.api.entity.CarParkingRecordEntity">
+        <id property="recordId" column="record_id"/>
+        <id property="userId" column="user_id"/>
+        <id property="spaceId" column="space_id"/>
+        <id property="startTime" column="start_time"/>
+        <id property="endTime" column="end_time"/>
+        <id property="status" column="status"/>
+  </resultMap>
+</mapper>
